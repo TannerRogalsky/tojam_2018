@@ -69,17 +69,19 @@ function Main:enteredState()
 
   local quadToMovement = {
       [pieceQuads[1]] = Movement:new(self.preloaded_movement_data.lpiece1),
-      [pieceQuads[7]] = Movement:new(self.preloaded_movement_data.tpiece1),
+      [pieceQuads[2]] = Movement:new(self.preloaded_movement_data.tpiece1),
   }
 
-  local p1 = Player:new()
+  local p1 = Player:new({1, 0, 1, 1})
   table.insert(p1.pieces, Piece:new(1, 1, quadToMovement[pieceQuads[1]], pieceQuads[1]))
-  local p2 = Player:new()
-  table.insert(p2.pieces, Piece:new(4, 4, quadToMovement[pieceQuads[7]], pieceQuads[7]))
+  local p2 = Player:new({0, 1, 1, 1})
+  table.insert(p2.pieces, Piece:new(4, 4, quadToMovement[pieceQuads[2]], pieceQuads[2]))
+  table.insert(p2.pieces, Piece:new(4, 3, quadToMovement[pieceQuads[1]], pieceQuads[1]))
   self.players = { p1, p2 }
   self.activePlayerIndex = 1
 
   g.setFont(self.preloaded_fonts['04b03_16'])
+  self.dehueShader = g.newShader('shaders/dehue.glsl')
 end
 
 function Main:update(dt)
@@ -97,6 +99,7 @@ function Main:update(dt)
         local cell = self.grid:get(piece.x, piece.y)
         cell.movement = piece.movement
         cell.quad = piece.quad
+        cell.player = player
       end
     end
     self.bgPieceBatch:clear()
@@ -106,6 +109,7 @@ function Main:update(dt)
         local w, h = self.grid:pixelDimensions()
         local sx, sy = w / qw, h / qh
         local px, py = self.grid:toPixels(x, y)
+        self.bgPieceBatch:setColor(cell.player.color)
         self.bgPieceBatch:add(cell.quad, px, py, 0, sx, sy)
       end
     end
@@ -119,6 +123,7 @@ function Main:update(dt)
         local w, h = self.grid:pixelDimensions()
         local sx, sy = w / qw, h / qh
         local px, py = self.grid:toPixels(piece.x, piece.y)
+        self.pieceBatch:setColor(player.color)
         self.pieceBatch:add(piece.quad, px, py, 0, sx, sy)
       end
     end
@@ -133,10 +138,14 @@ end
 
 function Main:draw()
   g.draw(self.gridBatch)
+
+  g.push('all')
+  g.setShader(self.dehueShader)
   g.setColor(1, 1, 1, 0.3)
   g.draw(self.bgPieceBatch)
   g.setColor(1, 1, 1)
   g.draw(self.pieceBatch)
+  g.pop()
 
   if self.selectedPiece then
     local piece = self.selectedPiece
@@ -199,7 +208,8 @@ function Main:mousereleased(x, y, button, isTouch)
       local ox, oy = math.floor(piece.movement.data.width / 2), math.floor(piece.movement.data.height / 2)
       for dx, dy, cell in piece.movement.grid:each() do
         local gx, gy = self.grid:adjustForWrap(gx + dx - ox - 1, gy + dy - oy - 1)
-        if not self.grid:out_of_bounds(gx, gy) and cell.active and gx == mx and gy == my then
+        local selfOccupied = getPieceAt(self.players[self.activePlayerIndex], self.grid, gx, gy) -- our own piece is in the way
+        if not selfOccupied and not self.grid:out_of_bounds(gx, gy) and cell.active and gx == mx and gy == my then
           for _, player in ipairs(self.players) do -- is the space occupied?
             local killed, index = getPieceAt(player, self.grid, gx, gy)
             if killed then
