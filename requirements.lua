@@ -33,6 +33,9 @@ push = require("lib.push.push")
 
 Base = require("base")
 Game = require("game")
+Piece = require('piece')
+Movement = require('movement')
+Player = require('player')
 
 Direction = require("direction")
 

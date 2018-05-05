@@ -67,6 +67,16 @@ function Grid:out_of_bounds(x, y)
   return x < 1 or y < 1 or x > self.width or y > self.height
 end
 
+function Grid:adjustForWrap(x, y)
+  if self.wrapX then
+    x = ((x - 1) % self.width) + 1
+  end
+  if self.wrapY then
+    y = ((y - 1) % self.height) + 1
+  end
+  return x, y
+end
+
 function Grid:get(x, y, orientation)
   if self:out_of_bounds(x, y) then
     -- out of bounds

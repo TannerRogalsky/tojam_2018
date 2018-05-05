@@ -31,3 +31,9 @@
 [submodule "lib/push"]
 	path = lib/push
 	url = https://github.com/Ulydev/push.git
+[submodule "lib/iqm"]
+	path = lib/iqm
+	url = https://github.com/excessive/iqm.git
+[submodule "lib/cpml"]
+	path = lib/cpml
+	url = https://github.com/excessive/cpml.git
