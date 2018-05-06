@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="4" height="4" tilewidth="256" tileheight="256" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="birds.tsx"/>
+ <layer name="Tile Layer 1" width="4" height="4">
+  <data encoding="csv">
+0,0,0,0,
+0,1,0,0,
+0,0,0,0,
+7,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 2" width="4" height="4">
+  <data encoding="csv">
+0,0,0,0,
+0,0,0,0,
+0,0,0,0,
+0,0,0,1
+</data>
+ </layer>
+</map>

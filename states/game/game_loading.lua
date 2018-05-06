@@ -13,6 +13,8 @@ function Loading:enteredState()
   self.preloaded_images = {}
   self.preloaded_fonts = {}
   self.preloaded_movement_data = {}
+  self.preloaded_scenario_data = {}
+  self.preloaded_movements = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
@@ -21,9 +23,10 @@ function Loading:enteredState()
     end
   end
 
-  local sizes = {12, 14, 16, 20, 24}
+  local sizes = {12, 14, 16, 20, 24, 36, 48, 56, 64}
+  self.font_sizes = sizes
   for index, filename in ipairs(love.filesystem.getDirectoryItems('fonts')) do
-    local font = filename:match('(.*).ttf$') or filename:match('(.*).TTF$')
+    local font = filename:match('(.*).ttf$') or filename:match('(.*).otf$')
     if font then
       for _,size in ipairs(sizes) do
         local key = font .. "_" .. tostring(size)
@@ -39,13 +42,24 @@ function Loading:enteredState()
     end
   end
 
+  for k,v in pairs(self.preloaded_movement_data) do
+    self.preloaded_movements[k] = Movement:new(v)
+  end
+
+  for index, filename in ipairs(love.filesystem.getDirectoryItems('scenarios')) do
+    local scenario = filename:match('(.*).lua$')
+    if scenario then
+      self.preloaded_scenario_data[scenario] = require('scenarios.' .. scenario)
+    end
+  end
+
   g.setFont(self.preloaded_fonts["04b03_16"])
 
   self.loader.start(function()
     -- loader finished callback
     -- initialize game stuff here
 
-    self:gotoState("Main")
+    self:gotoState("Select")
   end)
 
   local hexFormatStringPart = '%X '
