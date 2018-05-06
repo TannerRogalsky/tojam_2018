@@ -80,7 +80,7 @@
         <key>webpQualityLevel</key>
         <uint>101</uint>
         <key>textureSubPath</key>
-        <string></string>
+        <string>/Users/tanner/code/lua/tojam_2018/images/birds.png</string>
         <key>atfFormats</key>
         <string></string>
         <key>textureFormat</key>
@@ -150,7 +150,7 @@
             <key>lua</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename></filename>
+                <filename>birds.lua</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -187,7 +187,7 @@
             <key>trimMargin</key>
             <uint>1</uint>
             <key>trimMode</key>
-            <enum type="SpriteSettings::TrimMode">Trim</enum>
+            <enum type="SpriteSettings::TrimMode">None</enum>
             <key>tracerTolerance</key>
             <int>200</int>
             <key>heuristicMask</key>
