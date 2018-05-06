@@ -145,13 +145,25 @@ function Main:update(dt)
   do -- pieceBatch
     self.pieceBatch:clear()
     for _, player in ipairs(self.players) do
+      self.pieceBatch:setColor(player.color)
       for _, piece in ipairs(player.pieces) do
         local _, _, qw, qh = piece.quad:getViewport()
         local w, h = self.grid:pixelDimensions()
         local sx, sy = w / qw, h / qh
-        local px, py = self.grid:toPixels(piece.x, piece.y)
-        self.pieceBatch:setColor(player.color)
-        self.pieceBatch:add(piece.quad, px, py, 0, sx, sy)
+
+        if self.pieceMovement and self.pieceMovement.piece == piece then
+          local px, py = self.pieceMovement.curve:evaluate(self.pieceMovement.t)
+          self.pieceBatch:add(piece.quad, px, py, 0, sx, sy)
+
+          self.pieceMovement.t = self.pieceMovement.t + dt
+          if self.pieceMovement.t > 1 then
+            self.pieceMovement.callback()
+            self.pieceMovement = nil
+          end
+        else
+          local px, py = self.grid:toPixels(piece.x, piece.y)
+          self.pieceBatch:add(piece.quad, px, py, 0, sx, sy)
+        end
       end
     end
   end
@@ -266,26 +278,27 @@ function Main:mousereleased(x, y, button, isTouch)
           end
 
           do
-            local sx, sy = self.grid:toPixels(mx, my)
+            local sx, sy = self.grid:toPixels(piece.x, piece.y)
             local tx, ty = self.grid:toPixels(gx, gy)
             local cx, cy = love.math.random(g.getWidth()), love.math.random(g.getHeight())
+            local curve = love.math.newBezierCurve(sx, sy, cx, cy, tx, ty)
             self.pieceMovement = {
-              curve = love.math.newBezierCurve(sx, sy, cx, cy, tx, ty),
+              curve = curve,
               t = 0,
+              piece = piece,
               callback = function()
+                piece.x = gx
+                piece.y = gy
+
+                local cell = self.grid:get(gx, gy)
+                if cell.movement then
+                  piece.quad = cell.quad
+                  piece.movement = cell.movement
+                end
+                self.activePlayerIndex = (self.activePlayerIndex % #self.players) + 1
               end
             }
           end
-
-          piece.x = gx
-          piece.y = gy
-
-          local cell = self.grid:get(gx, gy)
-          if cell.movement then
-            piece.quad = cell.quad
-            piece.movement = cell.movement
-          end
-          self.activePlayerIndex = (self.activePlayerIndex % #self.players) + 1
           break
         end
       end
