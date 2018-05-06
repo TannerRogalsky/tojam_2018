@@ -16,11 +16,15 @@ function Menu:draw()
 end
 
 function Menu:keyreleased()
-  self:gotoState('Main', self.scenario)
+  if self.scenario then
+    self:gotoState('Main', self.scenario)
+  end
 end
 
 function Menu:mousereleased()
-  self:gotoState('Main', self.scenario)
+  if self.scenario then
+    self:gotoState('Main', self.scenario)
+  end
 end
 
 function Menu:exitedState()
