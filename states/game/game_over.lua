@@ -23,8 +23,12 @@ function Over:draw()
   )
 end
 
-function Over:keypressed()
-  self:gotoState('Select')
+function Over:keyreleased()
+  self:gotoState('Title')
+end
+
+function Over:mousereleased()
+  self:gotoState('Title')
 end
 
 function Over:exitedState()

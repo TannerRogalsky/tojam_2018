@@ -14,7 +14,7 @@ function Main:enteredState(scenarioData)
   for x, y, _ in self.grid:each() do
     self.grid:set(x, y, {})
   end
-  self.grid.wrapX = true
+  -- self.grid.wrapX = true
   -- self.grid.wrapY = true
   do
     function Grid:pixelDimensions()
@@ -336,14 +336,14 @@ function Main:mousereleased(x, y, button, isTouch)
 end
 
 function Main:keypressed(key, scancode, isrepeat)
-  if key == 'esc' then
-    self:gotoState('Select')
-  elseif game.debug and key == 'r' then
-    love.event.quit('restart')
-  end
 end
 
 function Main:keyreleased(key, scancode)
+  if key == 'escape' then
+    self:gotoState('Menu')
+  elseif game.debug and key == 'r' then
+    love.event.quit('restart')
+  end
 end
 
 function Main:gamepadpressed(joystick, button)
@@ -356,6 +356,7 @@ function Main:focus(has_focus)
 end
 
 function Main:exitedState()
+  self.pieceMovement = nil
   self.camera = nil
 end
 

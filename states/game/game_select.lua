@@ -99,7 +99,7 @@ end
 function Select:mousereleased(x, y, button, isTouch)
   local selectedScenario = self.scenarios[self.hoveredIndex]
   if selectedScenario then
-    self:gotoState('Main', self.preloaded_scenario_data[selectedScenario])
+    self:gotoState('Menu', self.preloaded_scenario_data[selectedScenario])
   end
 end
 

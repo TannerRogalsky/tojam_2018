@@ -64,9 +64,9 @@ function Loading:enteredState()
     -- loader finished callback
     -- initialize game stuff here
 
-
+    self.preloaded_sources["Kingfisher.ogg"]:setLooping(true)
     self.preloaded_sources["Kingfisher.ogg"]:play()
-    self:gotoState("Select")
+    self:gotoState("Title")
   end)
 
   local hexFormatStringPart = '%X '

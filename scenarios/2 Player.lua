@@ -4,8 +4,8 @@ return {
   tiledversion = "1.1.5",
   orientation = "orthogonal",
   renderorder = "right-down",
-  width = 7,
-  height = 7,
+  width = 6,
+  height = 6,
   tilewidth = 256,
   tileheight = 256,
   nextobjectid = 1,
@@ -43,8 +43,8 @@ return {
       name = "Tile Layer 1",
       x = 0,
       y = 0,
-      width = 7,
-      height = 7,
+      width = 6,
+      height = 6,
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -52,13 +52,12 @@ return {
       properties = {},
       encoding = "lua",
       data = {
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        1, 2, 3, 4, 5, 6, 7
+        0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0,
+        0, 0, 0, 8, 0, 0,
+        0, 4, 1, 0, 4, 0,
+        0, 0, 0, 6, 0, 0
       }
     },
     {
@@ -66,8 +65,8 @@ return {
       name = "Tile Layer 2",
       x = 0,
       y = 0,
-      width = 7,
-      height = 7,
+      width = 6,
+      height = 6,
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -75,13 +74,12 @@ return {
       properties = {},
       encoding = "lua",
       data = {
-        3, 2, 4, 7, 8, 6, 5,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0
+        0, 0, 0, 6, 0, 0,
+        0, 4, 1, 0, 4, 0,
+        0, 0, 0, 8, 0, 0,
+        0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0
       }
     }
   }
