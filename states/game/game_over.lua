@@ -17,7 +17,7 @@ function Over:draw()
 
   g.printf(
     {
-      self.winner.color, "Player",
+      self.winner.color, self.winner.name .. " Player",
       {1, 1, 1, 1}, " Won!!",
     }, 0, g.getHeight() / 2, g.getWidth(), 'center'
   )

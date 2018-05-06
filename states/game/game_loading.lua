@@ -15,11 +15,18 @@ function Loading:enteredState()
   self.preloaded_movement_data = {}
   self.preloaded_scenario_data = {}
   self.preloaded_movements = {}
+  self.preloaded_sources = {}
 
   -- puts loaded images into the preloaded_images hash with they key being the file name
   for index, image in ipairs(love.filesystem.getDirectoryItems('images')) do
     if image:match('(.*).png$') ~= nil or image:match('(.*).gif$') ~= nil or image:match('(.*).jpg$') ~= nil then
       self.loader.newImage(self.preloaded_images, image, 'images/' .. image)
+    end
+  end
+
+  for index, filename in ipairs(love.filesystem.getDirectoryItems('sounds')) do
+    if filename:match('(.*).ogg$') ~= nil then
+      self.loader.newSource(self.preloaded_sources, filename, 'sounds/' .. filename, 'stream')
     end
   end
 
@@ -52,8 +59,6 @@ function Loading:enteredState()
       self.preloaded_scenario_data[scenario] = require('scenarios.' .. scenario)
     end
   end
-
-  g.setFont(self.preloaded_fonts["04b03_16"])
 
   self.loader.start(function()
     -- loader finished callback

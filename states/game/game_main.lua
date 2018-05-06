@@ -268,9 +268,10 @@ function Main:draw()
 
   do
     local _, y = self.grid:toPixels(1, 1)
+    local player = self.players[self.activePlayerIndex]
     g.printf(
       {
-        self.players[self.activePlayerIndex].color, "Player" .. self.activePlayerIndex,
+        player.color, player.name .. " Player",
         {0, 0, 0, 1}, "'s Turn",
       }, 0, y - g.getFont():getHeight(), g.getWidth(), 'center'
     )
