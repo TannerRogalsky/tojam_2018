@@ -64,6 +64,8 @@ function Loading:enteredState()
     -- loader finished callback
     -- initialize game stuff here
 
+
+    self.preloaded_sources["Kingfisher.ogg"]:play()
     self:gotoState("Select")
   end)
 
